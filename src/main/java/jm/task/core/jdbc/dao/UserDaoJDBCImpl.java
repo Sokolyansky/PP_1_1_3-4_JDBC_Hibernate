@@ -16,7 +16,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        try{
+        try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("create table users (id int primary key auto_increment, name varchar(20)," +
                     " lastname varchar(20), age int)");
@@ -26,7 +26,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        try{
+        try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("drop table users");
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
-
+            System.out.println("User с именем – " + name + " добавлен в базу данных");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -80,7 +80,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        try{
+        try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("delete from users");
         } catch (SQLException e) {

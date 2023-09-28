@@ -61,7 +61,7 @@ public class User {
     }
 
     @Override
-    public String toString(){
-        return "Имя - " + name +" Фамилия - "+lastName+" Возраст - "+age;
+    public String toString() {
+        return "Имя - " + name + " Фамилия - " + lastName + " Возраст - " + age;
     }
 }
