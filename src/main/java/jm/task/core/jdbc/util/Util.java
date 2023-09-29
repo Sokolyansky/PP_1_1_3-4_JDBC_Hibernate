@@ -13,7 +13,7 @@ public class Util {
             return connection;
         else {
             try {
-                String driver = "com.mysql.jdbc.Driver";
+                String driver = "com.mysql.cj.jdbc.Driver";
                 String url = "jdbc:mysql://localhost:3306/Users";
                 String user = "root";
                 String password = "root1";
