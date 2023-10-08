@@ -17,6 +17,7 @@ public class Util {
     private static final String password = "root1";
 
     private static Connection connection = null;
+    private static SessionFactory sessionFactory = null;
 
     private Util() {
     }
@@ -33,8 +34,10 @@ public class Util {
         return connection;
     }
 
-
     public static SessionFactory getSessionFactory() {
+        if (sessionFactory != null)
+            return sessionFactory;
+
         try {
             Configuration configuration = new Configuration();
             configuration.setProperty("hibernate.dialect", dialect);
@@ -49,7 +52,8 @@ public class Util {
 
             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties());
-            return configuration.buildSessionFactory(builder.build());
+            sessionFactory = configuration.buildSessionFactory(builder.build());
+            return sessionFactory;
 
         } catch (Exception e) {
             throw new RuntimeException("There was an error building the session factory", e);
@@ -64,5 +68,8 @@ public class Util {
         }
     }
 
+    public static void closeSession() {
+        sessionFactory.close();
+    }
 
 }
