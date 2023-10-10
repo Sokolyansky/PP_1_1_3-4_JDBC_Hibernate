@@ -10,11 +10,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    private static final String driver = "com.mysql.cj.jdbc.Driver";
-    private static final String dialect = "org.hibernate.dialect.MySQLDialect";
-    private static final String url = "jdbc:mysql://localhost:3306/Users";
-    private static final String user = "root";
-    private static final String password = "root1";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String DIALECT = "org.hibernate.dialect.MySQLDialect";
+    private static final String URL = "jdbc:mysql://localhost:3306/Users";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root1";
 
     private static Connection connection = null;
     private static SessionFactory sessionFactory = null;
@@ -26,8 +26,8 @@ public class Util {
         if (connection != null)
             return connection;
         try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(url, user, password);
+            Class.forName(DRIVER);
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -40,11 +40,11 @@ public class Util {
 
         try {
             Configuration configuration = new Configuration();
-            configuration.setProperty("hibernate.dialect", dialect);
-            configuration.setProperty("hibernate.connection.driver_class", driver);
-            configuration.setProperty("hibernate.connection.url", url);
-            configuration.setProperty("hibernate.connection.username", user);
-            configuration.setProperty("hibernate.connection.password", password);
+            configuration.setProperty("hibernate.dialect", DIALECT);
+            configuration.setProperty("hibernate.connection.driver_class", DRIVER);
+            configuration.setProperty("hibernate.connection.url", URL);
+            configuration.setProperty("hibernate.connection.username", USER);
+            configuration.setProperty("hibernate.connection.password", PASSWORD);
             configuration.setProperty("hibernate.show_sql", "true");
             configuration.setProperty("hibernate.hbm2ddl.auto", "update");
 

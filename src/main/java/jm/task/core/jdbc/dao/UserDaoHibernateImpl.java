@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.Collections;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -18,29 +19,24 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            transaction.setRollbackOnly();
+            Transaction transaction = session.beginTransaction();
             session.createSQLQuery("create table if not exists users (id bigint primary key auto_increment," +
                     " name varchar(20), lastname varchar(20), age tinyint) ENGINE=MyISAM").executeUpdate();
             transaction.commit();
         } catch (HibernateException he) {
-            if (transaction != null) transaction.rollback();
             he.printStackTrace();
         }
     }
 
     @Override
     public void dropUsersTable() {
-        Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             String sql = "drop table if exists users";
             session.createSQLQuery(sql).executeUpdate();
             transaction.commit();
         } catch (HibernateException he) {
-            if (transaction != null) transaction.rollback();
             he.printStackTrace();
         }
     }
@@ -80,14 +76,15 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
+        List<User> list = Collections.emptyList();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            List<User> list = session.createQuery("from User").getResultList();
+            list = session.createQuery("from User").getResultList();
             session.getTransaction().commit();
             return list;
         }catch (HibernateException he) {
             he.printStackTrace();
-            return null;
+            return list;
         }
     }
 
